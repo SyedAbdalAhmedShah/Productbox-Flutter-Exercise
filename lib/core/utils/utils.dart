@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:productbox_flutter_exercise/core/components/custom_gap.dart';
 import 'package:productbox_flutter_exercise/core/utils/extensions.dart';
-import 'package:productbox_flutter_exercise/views/components/custom_gap.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class Utils {

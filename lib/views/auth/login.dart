@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:productbox_flutter_exercise/bloc/cubits/auth_cubit/auth_cubit.dart';
+import 'package:productbox_flutter_exercise/core/components/app_button.dart';
+import 'package:productbox_flutter_exercise/core/components/custom_gap.dart';
 import 'package:productbox_flutter_exercise/core/constants/app_colors.dart';
 import 'package:productbox_flutter_exercise/core/constants/app_strings.dart';
 import 'package:productbox_flutter_exercise/core/utils/utils.dart';
 import 'package:productbox_flutter_exercise/core/utils/validators.dart';
-import 'package:productbox_flutter_exercise/views/components/app_button.dart';
-import 'package:productbox_flutter_exercise/views/components/custom_gap.dart';
-import 'package:productbox_flutter_exercise/views/components/custom_text_field.dart';
+import 'package:productbox_flutter_exercise/views/auth/widgets/custom_text_field.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class LoginPage extends StatelessWidget {
