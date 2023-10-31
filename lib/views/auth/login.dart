@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:productbox_flutter_exercise/bloc/cubits/auth_cubit/auth_cubit.dart';
 import 'package:productbox_flutter_exercise/core/constants/app_colors.dart';
 import 'package:productbox_flutter_exercise/core/constants/app_strings.dart';
+import 'package:productbox_flutter_exercise/core/utils/validators.dart';
 import 'package:productbox_flutter_exercise/views/components/app_button.dart';
 import 'package:productbox_flutter_exercise/views/components/custom_gap.dart';
 import 'package:productbox_flutter_exercise/views/components/custom_text_field.dart';
@@ -11,8 +14,8 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController _emailController = TextEditingController();
-    final TextEditingController _passwordController = TextEditingController();
+    final authCubit = BlocProvider.of<AuthCubit>(context);
+
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 8.0.w),
@@ -28,13 +31,34 @@ class LoginPage extends StatelessWidget {
                     fontWeight: FontWeight.bold),
               ),
               CustomGap(height: 4.h),
-              CustomTextField(
-                  controller: _emailController, hint: AppStrings.email),
+              BlocBuilder<AuthCubit, AuthState>(
+                builder: (context, state) {
+                  return Form(
+                    key: authCubit.formKey,
+                    child: Column(
+                      children: [
+                        CustomTextField(
+                          controller: authCubit.emailController,
+                          hint: AppStrings.email,
+                          validator: AppValidators.emailValidator,
+                        ),
+                        const CustomGap(),
+                        CustomTextField(
+                          controller: authCubit.passwordController,
+                          hint: AppStrings.password,
+                          validator: AppValidators.passwordValidator,
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
               const CustomGap(),
-              CustomTextField(
-                  controller: _passwordController, hint: AppStrings.password),
-              const CustomGap(),
-              AppButton(),
+              AppButton(onTap: () {
+                if (authCubit.formKey.currentState?.validate() ?? false) {
+                  authCubit.loginUser();
+                } else {}
+              }),
               const CustomGap(),
               Text(
                 AppStrings.forgotPassword,
