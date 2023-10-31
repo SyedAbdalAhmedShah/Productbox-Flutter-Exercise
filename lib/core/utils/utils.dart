@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:productbox_flutter_exercise/core/components/custom_gap.dart';
+import 'package:productbox_flutter_exercise/core/constants/app_strings.dart';
 import 'package:productbox_flutter_exercise/core/utils/extensions.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class Utils {
+  static List<String> uploadDocCardNames = [
+    AppStrings.profilePhoto,
+    AppStrings.drivingLicense,
+    AppStrings.certificate,
+    AppStrings.passport,
+  ];
   static showGenericErrorDialog(
       {required BuildContext context, String? message, Function()? onPressed}) {
     showDialog(
