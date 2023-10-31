@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:productbox_flutter_exercise/bloc/cubits/auth_cubit/auth_cubit.dart';
 import 'package:productbox_flutter_exercise/core/constants/app_colors.dart';
 import 'package:productbox_flutter_exercise/core/constants/app_strings.dart';
+import 'package:productbox_flutter_exercise/core/utils/utils.dart';
 import 'package:productbox_flutter_exercise/core/utils/validators.dart';
 import 'package:productbox_flutter_exercise/views/components/app_button.dart';
 import 'package:productbox_flutter_exercise/views/components/custom_gap.dart';
@@ -31,27 +32,36 @@ class LoginPage extends StatelessWidget {
                     fontWeight: FontWeight.bold),
               ),
               CustomGap(height: 4.h),
-              BlocBuilder<AuthCubit, AuthState>(
-                builder: (context, state) {
-                  return Form(
-                    key: authCubit.formKey,
-                    child: Column(
-                      children: [
-                        CustomTextField(
-                          controller: authCubit.emailController,
-                          hint: AppStrings.email,
-                          validator: AppValidators.emailValidator,
-                        ),
-                        const CustomGap(),
-                        CustomTextField(
-                          controller: authCubit.passwordController,
-                          hint: AppStrings.password,
-                          validator: AppValidators.passwordValidator,
-                        ),
-                      ],
-                    ),
-                  );
+              BlocListener<AuthCubit, AuthState>(
+                listener: (context, state) {
+                  if (state is AuthFailureState) {
+                    Utils.showGenericErrorDialog(
+                        context: context, message: state.message);
+                  }
                 },
+                child: BlocBuilder<AuthCubit, AuthState>(
+                  builder: (context, state) {
+                    return Form(
+                      key: authCubit.formKey,
+                      child: Column(
+                        children: [
+                          CustomTextField(
+                            controller: authCubit.emailController,
+                            hint: AppStrings.email,
+                            validator: AppValidators.emailValidator,
+                          ),
+                          const CustomGap(),
+                          CustomTextField(
+                            controller: authCubit.passwordController,
+                            hint: AppStrings.password,
+                            obscureText: true,
+                            validator: AppValidators.passwordValidator,
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
               ),
               const CustomGap(),
               AppButton(onTap: () {

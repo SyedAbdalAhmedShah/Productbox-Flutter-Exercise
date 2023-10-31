@@ -20,9 +20,11 @@ class AppButton extends StatelessWidget {
           onTap: onTap,
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 1000),
-            width: state is AuthLoadingState ? 20.w : 30.w,
+            width: state is AuthLoadingState ? 20.w : 100.w,
             alignment: Alignment.center,
-            padding: EdgeInsets.symmetric(vertical: 1.h, horizontal: 2.w),
+            padding: EdgeInsets.symmetric(
+                vertical: state is AuthLoadingState ? 1.h : 1.5.h,
+                horizontal: 2.w),
             decoration: BoxDecoration(
                 color: Theme.of(context).primaryColor,
                 borderRadius: BorderRadius.circular(20.w / pi)),

@@ -7,10 +7,12 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 class CustomTextField extends StatelessWidget {
   final String hint;
   final TextEditingController controller;
+  final bool obscureText;
   final String? Function(String?)? validator;
   const CustomTextField(
       {required this.controller,
       required this.hint,
+      this.obscureText = false,
       this.validator,
       super.key});
 
@@ -19,6 +21,7 @@ class CustomTextField extends StatelessWidget {
     return TextFormField(
         controller: controller,
         validator: validator,
+        obscureText: obscureText,
         decoration: InputDecoration(
             hintText: hint,
             hintStyle: TextStyle(fontSize: 16.sp, color: AppColors.greyColor),
