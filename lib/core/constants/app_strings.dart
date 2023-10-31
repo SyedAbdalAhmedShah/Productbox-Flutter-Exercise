@@ -10,9 +10,12 @@ class AppStrings {
   static const String userNotFound = 'User not found';
   static const String somethingWentWrong = 'Something Went Wrong';
   static const String fileNotPicked = 'File Not Picked';
+  static const String pictureNotPicked = 'Picture Not Picked';
   static const String uploadDocument = 'Upload Documents';
   static const String profilePhoto = 'Profile Picture';
   static const String drivingLicense = 'Driving License';
   static const String certificate = 'Certificate';
   static const String passport = 'Passport';
+  static const String camera = 'Camera';
+  static const String file = 'File';
 }

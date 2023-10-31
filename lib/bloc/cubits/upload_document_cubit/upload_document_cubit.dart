@@ -12,18 +12,72 @@ class UploadDocumentCubit extends Cubit<UploadDocumentState> {
   UploadDocumentCubit() : super(UploadDocumentInitial());
 
   int uploadFileIndex = 0;
+
   File? profilePicture;
   File? drivingLicense;
   File? certificate;
   File? passport;
+
+  String errorMessage = "";
   UploadDocumentRepository _repository = UploadDocumentRepository();
-  Future uploadFile() async {
-    switch (uploadFileIndex) {
-      case 0:
-        Either<Failure, List<File>> pickedFiles = await _repository.pickFile();
-        pickedFiles.fold((failure) => debugPrint("Failure ${failure.message}"),
-            (pickedFiles) => print("PICKED FILE ${pickedFiles.length}"));
-        break;
+  Future galleryFile(BuildContext context) async {
+    Either<Failure, List<File>> pickedFiles = await _repository.pickFile();
+    pickedFiles.fold((failure) => errorMessage = failure.message,
+        (pickedFiles) {
+      switch (uploadFileIndex) {
+        case 0:
+          profilePicture = pickedFiles.first;
+          uploadFileIndex = uploadFileIndex + 1;
+          break;
+        case 1:
+          drivingLicense = pickedFiles.first;
+          uploadFileIndex = uploadFileIndex + 1;
+          break;
+        case 2:
+          certificate = pickedFiles.first;
+          uploadFileIndex = uploadFileIndex + 1;
+          break;
+        case 3:
+          passport = pickedFiles.first;
+          uploadFileIndex = uploadFileIndex + 1;
+      }
+    });
+    Navigator.pop(context);
+    if (pickedFiles.isRight()) {
+      emit(CaptureProfilePhotoState());
+    } else {
+      emit(UploadDocumentFailureState(message: errorMessage));
+    }
+  }
+
+  Future capturePicker(BuildContext context) async {
+    Either<Failure, File> pickedFiles =
+        await _repository.captureFileFromCamera();
+    pickedFiles.fold((failure) => errorMessage = failure.message,
+        (pickedFiles) {
+      switch (uploadFileIndex) {
+        case 0:
+          profilePicture = pickedFiles;
+          uploadFileIndex = uploadFileIndex + 1;
+          break;
+        case 1:
+          drivingLicense = pickedFiles;
+          uploadFileIndex = uploadFileIndex + 1;
+          break;
+        case 2:
+          certificate = pickedFiles;
+          uploadFileIndex = uploadFileIndex + 1;
+          break;
+        case 3:
+          passport = pickedFiles;
+          uploadFileIndex = uploadFileIndex + 1;
+      }
+    });
+    Navigator.pop(context);
+    if (pickedFiles.isRight()) {
+      emit(CaptureProfilePhotoState());
+    } else {
+      emit(UploadDocumentFailureState(message: errorMessage));
     }
   }
 }

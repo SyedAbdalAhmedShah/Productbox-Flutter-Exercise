@@ -26,7 +26,9 @@ class AppButton extends StatelessWidget {
                 vertical: state is AuthLoadingState ? 1.h : 1.5.h,
                 horizontal: 2.w),
             decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor,
+                color: onTap != null
+                    ? Theme.of(context).primaryColor
+                    : Theme.of(context).primaryColor.withOpacity(0.2),
                 borderRadius: BorderRadius.circular(20.w / pi)),
             child: AnimatedSwitcher(
               duration: const Duration(milliseconds: 1000),

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:productbox_flutter_exercise/bloc/cubits/upload_document_cubit/upload_document_cubit.dart';
+import 'package:productbox_flutter_exercise/core/components/app_button.dart';
 import 'package:productbox_flutter_exercise/core/components/custom_gap.dart';
 import 'package:productbox_flutter_exercise/core/constants/app_colors.dart';
 import 'package:productbox_flutter_exercise/core/constants/app_strings.dart';
@@ -12,6 +15,7 @@ class UploadUserInfoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final documentCubit = BlocProvider.of<UploadDocumentCubit>(context);
     return Scaffold(
       body: Center(
         child: Padding(
@@ -29,10 +33,31 @@ class UploadUserInfoPage extends StatelessWidget {
               const CustomGap(),
               const UploadBar(),
               const CustomGap(),
-              Column(
-                children: List.generate(Utils.uploadDocCardNames.length,
-                    (index) => UploadDocumentCard(index: index)),
-              )
+              BlocBuilder<UploadDocumentCubit, UploadDocumentState>(
+                builder: (context, state) {
+                  return Column(
+                    children: [
+                      Column(
+                        children: List.generate(
+                            Utils.uploadDocCardNames.length,
+                            (index) => UploadDocumentCard(
+                                  index: index,
+                                  pickedImage: [
+                                    documentCubit.profilePicture,
+                                    documentCubit.drivingLicense,
+                                    documentCubit.certificate,
+                                    documentCubit.passport
+                                  ],
+                                )),
+                      ),
+                      const CustomGap(),
+                      AppButton(
+                          onTap:
+                              documentCubit.uploadFileIndex < 4 ? null : () {}),
+                    ],
+                  );
+                },
+              ),
             ],
           ),
         ),

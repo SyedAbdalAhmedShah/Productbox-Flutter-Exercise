@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:productbox_flutter_exercise/bloc/cubits/upload_document_cubit/upload_document_cubit.dart';
 import 'package:productbox_flutter_exercise/core/components/custom_gap.dart';
 import 'package:productbox_flutter_exercise/core/constants/app_strings.dart';
 import 'package:productbox_flutter_exercise/core/utils/extensions.dart';
@@ -42,6 +44,51 @@ class Utils {
                   ],
                 ),
               ),
+            ));
+  }
+
+  static showCameraGalleryBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15.px),
+                topRight: Radius.circular(15.px))),
+        builder: (ctx) => Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ListTile(
+                  onTap: () => BlocProvider.of<UploadDocumentCubit>(context)
+                      .capturePicker(context),
+                  leading: Icon(Icons.camera_alt_outlined,
+                      color: Theme.of(context).primaryColorDark, size: 5.h),
+                  titleAlignment: ListTileTitleAlignment.center,
+                  title: Text(
+                    AppStrings.camera,
+                    style: TextStyle(
+                        color: Theme.of(context).primaryColorDark,
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+                ListTile(
+                  onTap: () => BlocProvider.of<UploadDocumentCubit>(context)
+                      .galleryFile(context),
+                  leading: Icon(
+                    Icons.photo,
+                    color: Theme.of(context).primaryColorDark,
+                    size: 5.h,
+                  ),
+                  titleAlignment: ListTileTitleAlignment.center,
+                  title: Text(
+                    AppStrings.file,
+                    style: TextStyle(
+                        color: Theme.of(context).primaryColorDark,
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ],
             ));
   }
 }
