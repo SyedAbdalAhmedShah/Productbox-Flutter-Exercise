@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
           title: 'ProductBox Flutter Exercise',
           theme: MyThemeData.themeData,
           routes: AppRouting.routes,
-          initialRoute: RouteNames.uploadUserInfoRoute,
+          initialRoute: RouteNames.webSocketsRoute,
         ),
       ),
     );
