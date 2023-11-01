@@ -17,5 +17,6 @@ class AppStrings {
   static const String certificate = 'Certificate';
   static const String passport = 'Passport';
   static const String camera = 'Camera';
+  static const String noName = 'No Name';
   static const String file = 'File';
 }
