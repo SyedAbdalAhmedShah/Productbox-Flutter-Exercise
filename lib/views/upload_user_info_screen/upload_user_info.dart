@@ -5,6 +5,7 @@ import 'package:productbox_flutter_exercise/core/components/app_button.dart';
 import 'package:productbox_flutter_exercise/core/components/custom_gap.dart';
 import 'package:productbox_flutter_exercise/core/constants/app_colors.dart';
 import 'package:productbox_flutter_exercise/core/constants/app_strings.dart';
+import 'package:productbox_flutter_exercise/core/constants/route_name.dart';
 import 'package:productbox_flutter_exercise/core/utils/utils.dart';
 import 'package:productbox_flutter_exercise/views/upload_user_info_screen/widgets/upload_bar.dart';
 import 'package:productbox_flutter_exercise/views/upload_user_info_screen/widgets/upload_document_card.dart';
@@ -52,8 +53,12 @@ class UploadUserInfoPage extends StatelessWidget {
                       ),
                       const CustomGap(),
                       AppButton(
-                          onTap:
-                              documentCubit.uploadFileIndex < 4 ? null : () {}),
+                          onTap: documentCubit.uploadFileIndex < 4
+                              ? null
+                              : () {
+                                  Navigator.pushNamed(
+                                      context, RouteNames.dashboardRoute);
+                                }),
                     ],
                   );
                 },

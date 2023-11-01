@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
           title: 'ProductBox Flutter Exercise',
           theme: MyThemeData.themeData,
           routes: AppRouting.routes,
-          initialRoute: RouteNames.dashboardRoute,
+          initialRoute: RouteNames.initialRoute,
         ),
       ),
     );

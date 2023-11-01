@@ -1,8 +1,7 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:productbox_flutter_exercise/bloc/repositories/auth_repository.dart';
+import 'package:productbox_flutter_exercise/core/constants/route_name.dart';
 
 part 'auth_state.dart';
 
@@ -15,7 +14,7 @@ class AuthCubit extends Cubit<AuthState> {
   final TextEditingController passwordController = TextEditingController();
   String errorMessage = "";
   bool isUserFind = false;
-  void loginUser() async {
+  void loginUser(BuildContext context) async {
     emit(AuthLoadingState());
 
     final result = await authRepository.getUser(
@@ -24,8 +23,9 @@ class AuthCubit extends Cubit<AuthState> {
 
     result.fold(
         (failure) => errorMessage = failure.message, (r) => isUserFind = r);
-    log('=====================> $isUserFind');
+
     if (result.isRight()) {
+      Navigator.pushNamed(context, RouteNames.uploadUserInfoRoute);
       emit(AuthSuccessState());
     } else {
       emit(AuthFailureState(message: errorMessage));
